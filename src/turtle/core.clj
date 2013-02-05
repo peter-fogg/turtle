@@ -23,6 +23,13 @@
                       :stderr (scanner->seq (Scanner. (.getErrorStream p#)))
                       :stdin (io/writer (.getOutputStream p#))}))))))
 
+(defn process-write
+  "Writes lines and closes process stdin stream."
+  [proc & lines]
+  (doseq [line lines]
+    (.write (:stdin proc) (str line "\n")))
+  (.close (:stdin proc)))
+
 (defn scanner->seq
   "Takes a java.util.Scanner and returns a lazy sequence consisting of
   the lines of said Scanner's output."
@@ -34,8 +41,7 @@
 (defcommands python)
 
 (defn -main [& args]
-  (let [proc (python "-c" "a = raw_input(''); print(a + '\\nfoo\\nwhat\\'s a bagginses?')")]
-    (.write (:stdin proc) "hell yeah")
-    (.close (:stdin proc))
+  (let [proc (python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
+    (process-write proc "hell yeah" "bar" "baz")
     (doseq [line (:stdout proc)]
       (println line))))
