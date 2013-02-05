@@ -4,7 +4,7 @@ A simple Clojure library for executing shell commands as subprocesses. Just defi
 
 ## Usage
 
-```clojure
+```clj
 user=> (defcommands python)
 #'user/python
 user=> (let [proc (python "-c" "print('hello, world!')")]
