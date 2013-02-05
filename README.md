@@ -1,10 +1,15 @@
 # turtle
 
-A simple Clojure library for executing shell commands as subprocesses.
+A simple Clojure library for executing shell commands as subprocesses. Just define the commands you want to use, and use them as functions returning a map of stdin, stdout, and stderr.
 
 ## Usage
 
-fizz!
+```clojure
+user=> (defcommands python)
+#'user/python
+user=> (let [proc (python "-c" "print('hello, world!')")]
+         (println (str "Python says \"" (first (:stdout proc)) "\"")))
+```
 
 ## License
 

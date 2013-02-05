@@ -2,6 +2,14 @@
   (:use clojure.test
         turtle.core))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+;; TODO: test all the things.
+
+(defn python-fixture [f]
+  (defcommands [python :as not-python])
+  (f))
+
+(use-fixtures :once python-fixture)
+
+(deftest test-defcommands
+  (testing "Read the output of a shell command."
+    (is (= 2 (read-string (first (:stdout (not-python "-c" "print(1 + 1)"))))))))
