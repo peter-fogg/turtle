@@ -1,6 +1,6 @@
 # turtle
 
-A simple Clojure library for executing shell commands as subprocesses. Just define the commands you want to use, and use them as functions returning a map of stdin, stdout, and stderr.
+A simple Clojure library for executing shell commands as subprocesses. Just define the commands you want to use, and use them as functions returning a map with keys `[:stdout :stderr :stdin :kill :status]`.
 
 ## Usage
 
