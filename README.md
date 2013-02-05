@@ -13,6 +13,9 @@ Python says "hello, world!"
 nil
 ```
 
+## Installation
+Just add `[turtle "0.1.0"]` to your `project.clj`. Shiny.
+
 ## License
 
 Copyright © 2013 Peter Fogg.
