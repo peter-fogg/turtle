@@ -9,6 +9,8 @@ user=> (defcommands python)
 #'user/python
 user=> (let [proc (python "-c" "print('hello, world!')")]
          (println (str "Python says \"" (first (:stdout proc)) "\"")))
+Python says "hello, world!"
+nil
 ```
 
 ## License
