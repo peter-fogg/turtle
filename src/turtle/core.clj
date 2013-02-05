@@ -42,10 +42,10 @@
    (when (.hasNextLine scanner)
      (cons (.nextLine scanner) (scanner->seq scanner)))))
 
-(defcommands python)
+;; (defcommands python)
 
-(defn -main [& args]
-  (let [proc (python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
-    (process-write proc "hell yeah" "bar" "baz")
-    (doseq [line (:stdout proc)]
-      (println line))))
+;; (defn -main [& args]
+;;   (let [proc (python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
+;;     (process-write proc "hell yeah" "bar" "baz")
+;;     (doseq [line (:stdout proc)]
+;;       (println line))))

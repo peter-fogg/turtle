@@ -18,7 +18,7 @@
 
 (deftest test-write
   (testing "Test process-write."
-    (is (= (let [proc (python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
+    (is (= (let [proc (not-python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
              (process-write proc "foo" "bar" "baz")
              (:stdout proc))
            '("foobarbaz")))))
@@ -26,14 +26,12 @@
 (deftest test-exit
   (testing "Make sure exit code is 0."
     (is (= 0 (let [proc (ls)]
-               (doseq [line (:stdout proc)])
+               (doseq [line (:stdout proc)]) ;; read all output before taking exit status
                ((:status proc))))))
   (testing "Can't take the exit code of a process which hasn't finished yet."
     (is (thrown? java.lang.IllegalThreadStateException
-                 ((:status (ls)))))))
+                 ((:status (not-python)))))))
 
 (deftest test-kill
   (testing "Killing a process shouldn't throw an exception."
-    (is (= nil (let [proc (ls)]
-                 (:stdout proc) ;; read all output before killing
-                 ((:kill proc)))))))
+    (is (= nil ((:kill (not-python)))))))
