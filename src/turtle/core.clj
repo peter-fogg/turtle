@@ -18,10 +18,14 @@
                                       [(cmd 0) (cmd 2)]
                                       [cmd cmd])]
                 `(defn ~fname [& args#]
-                   (let [p# (.start (ProcessBuilder. (cons ~(str cmdname) args#)))]
+                   (let [p# (-> (cons ~(str cmdname) args#)
+                                ProcessBuilder.
+                                .start)]
                      {:stdout (scanner->seq (Scanner. (.getInputStream p#)))
                       :stderr (scanner->seq (Scanner. (.getErrorStream p#)))
-                      :stdin (io/writer (.getOutputStream p#))}))))))
+                      :stdin (io/writer (.getOutputStream p#))
+                      :kill #(.destroy p#)
+                      :status #(.exitValue p#)}))))))
 
 (defn process-write
   "Writes lines and closes process stdin stream."
