@@ -29,7 +29,7 @@
 
 (defn process-write
   "Writes lines and closes process stdin stream."
-  [proc & lines]
+  [proc lines]
   (doseq [line lines]
     (.write (:stdin proc) (str line "\n")))
   (.close (:stdin proc)))
@@ -42,10 +42,14 @@
    (when (.hasNextLine scanner)
      (cons (.nextLine scanner) (scanner->seq scanner)))))
 
-;; (defcommands python)
-
-;; (defn -main [& args]
-;;   (let [proc (python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
-;;     (process-write proc "hell yeah" "bar" "baz")
-;;     (doseq [line (:stdout proc)]
-;;       (println line))))
+(defn pipe
+  "Takes a variable number of processes and hooks stdout of the first
+  into stdin of the second, and so on. Returns stdout of the last
+  process."
+  [& procs]
+  (loop [p procs]
+    (if (= 1 (count p))
+      (:stdout (first p))
+      (do
+        (process-write (second p) (:stdout (first p)))
+        (recur (next p))))))

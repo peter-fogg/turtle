@@ -5,7 +5,7 @@
 ;; TODO: test all the things.
 
 (defn proc-fixture [f]
-  (defcommands [python :as not-python] ls)
+  (defcommands [python :as not-python] ls grep)
   (f))
 
 (use-fixtures :once proc-fixture)
@@ -19,7 +19,7 @@
 (deftest test-write
   (testing "Test process-write."
     (is (= (let [proc (not-python "-c" "a = raw_input(''); b = raw_input(''); c = raw_input(''); print(a + b + c)")]
-             (process-write proc "foo" "bar" "baz")
+             (process-write proc ["foo" "bar" "baz"])
              (:stdout proc))
            '("foobarbaz")))))
 
@@ -35,3 +35,9 @@
 (deftest test-kill
   (testing "Killing a process shouldn't throw an exception."
     (is (= nil ((:kill (not-python)))))))
+
+(deftest test-pipe
+  (testing "Foo."
+    (is (= (pipe (not-python "-c" "print('foo'); print('bar'); print('baz')")
+                 (grep "ba"))
+           '("bar" "baz")))))
