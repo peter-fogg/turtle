@@ -37,7 +37,7 @@
     (is (= nil ((:kill (not-python)))))))
 
 (deftest test-pipe
-  (testing "Foo."
+  (testing "Make sure the output of a series of pipes is as expected."
     (is (= (pipe (not-python "-c" "print('foo'); print('bar'); print('baz')")
                  (grep "ba"))
            '("bar" "baz")))))
