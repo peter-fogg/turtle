@@ -1,5 +1,7 @@
 # turtle
 
+[![Build Status](https://travis-ci.org/peter-fogg/turtle.png)](https://travis-ci.org/peter-fogg/turtle)
+
 A simple Clojure library for executing shell commands as subprocesses. Just define the commands you want to use, and use them as functions returning a map with information about said process.
 
 ## Usage
