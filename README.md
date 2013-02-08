@@ -11,7 +11,10 @@ user=> (let [proc (python "-c" "print('hello, world!')")]
          (println (str "Python says \"" (first (:stdout proc)) "\"")))
 Python says "hello, world!"
 nil
-user=> (doseq [line (pipe (ls "/Users/yourname/") (grep "foo") (sort "-r"))]
+user=> (doseq [line (pipe 
+                      (ls "/Users/yourname/")
+                      (grep "foo")
+                      (sort "-r"))]
          (println line))
 this_file_has_food.c
 ilikefood
