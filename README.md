@@ -31,7 +31,7 @@ Status was 1.
 ```
 
 ## Installation
-Just add `[turtle "0.1.0"]` to your `project.clj`. Shiny.
+Just add `[turtle "0.1.0"]` to your `project.clj`. Shiny!
 
 ## License
 
